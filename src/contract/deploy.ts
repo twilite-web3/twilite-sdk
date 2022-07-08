@@ -10,7 +10,7 @@ const constructContract = async (params: { apiKey: string; address: string; netw
   const abi = JSON.stringify(compiled.abi)
   return await axios.get(`${config.endpoint}contract/constructContract`, {
     headers: {
-      'Authorization': params.apiKey,
+      'x-api-key': params.apiKey,
     },
     params: {
       abi,
@@ -33,7 +33,7 @@ const signContract = async (constructedContract: any, params: { apiKey: string; 
 const sendSignedContract = async (signedContract: string, params: { apiKey: string; network: string }) => {
   return await axios.get(`${config.endpoint}contract/sendContract`, {
     headers: {
-      'Authorization': params.apiKey,
+      'x-api-key': params.apiKey,
     },
     params: {
       contract: signedContract,

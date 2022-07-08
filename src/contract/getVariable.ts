@@ -7,8 +7,7 @@ module.exports = {
   getVariable: async (params: { apiKey: string; network: string; contractAddress: string; abi: Array<object>; variableName: string }) => {
     const response = await axios.get(`${config.endpoint}contract/getVariable`, {
       headers: {
-        'Authorization': params.apiKey,
-        // 'x-api-key': '<ADD HERE>',
+        'x-api-key': params.apiKey,
       },
       params: {
         network: params.network,

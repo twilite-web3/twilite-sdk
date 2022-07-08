@@ -10,7 +10,7 @@ module.exports = {
     const bytecode = compiled.bytecode
     const response = await axios.get(`${config.endpoint}contract/estimateDeployment`, {
       headers: {
-        'Authorization': params.apiKey,
+        'x-api-key': params.apiKey,
       },
       params: {
         network: params.network,

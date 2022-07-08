@@ -7,7 +7,7 @@ module.exports = {
   getCosts: async (params: { apiKey: string; network: string }) => {
     const response = await axios.get(`${config.endpoint}utils/getCosts`, {
       headers: {
-        'Authorization': params.apiKey,
+        'x-api-key': params.apiKey,
       },
       params: {
         network: params.network

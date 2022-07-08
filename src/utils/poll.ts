@@ -6,7 +6,7 @@ const config = require('../../config.json')
 const getReceipt = async (txHash: string, params: { apiKey: string; network: string }) => {
   return await axios.get(`${config.endpoint}utils/poll`, {
     headers: {
-      'Authorization': params.apiKey,
+      'x-api-key': params.apiKey,
     },
     params: {
       txHash,

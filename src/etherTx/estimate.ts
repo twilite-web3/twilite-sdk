@@ -7,7 +7,7 @@ module.exports = {
   estimate: async (params: { apiKey: string; to: string; network: string }) => {
     const response = await axios.get(`${config.endpoint}etherTx/estimate`, {
       headers: {
-        'Authorization': params.apiKey,
+        'x-api-key': params.apiKey,
       },
       params: {
         to: params.to,
