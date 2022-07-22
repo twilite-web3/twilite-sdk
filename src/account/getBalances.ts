@@ -7,7 +7,7 @@ module.exports = {
   getBalances: async (params: { apiKey: string; addresses: Array<string>; network: string }) => {
     const response = await axios.get(`${config.endpoint}account/getBalance`, {
       headers: {
-        'Authorization': params.apiKey,
+        'x-api-key': params.apiKey,
       },
       params: {
         addresses: JSON.stringify(params.addresses),

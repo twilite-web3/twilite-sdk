@@ -7,7 +7,7 @@ module.exports = {
   estimateMethodCall: async (params: { apiKey: string; network: string; abi: Array<object>; contractAddress: string; arguments: Array<String>; method: string; fromAddress: string }) => {
     const response = await axios.get(`${config.endpoint}contract/estimateMethodCall`, {
       headers: {
-        'Authorization': params.apiKey,
+        'x-api-key': params.apiKey,
       },
       params: {
         network: params.network,

@@ -9,7 +9,7 @@ const { poll } = require('../utils/poll')
 const sendSignedTx = async (serializedTransaction: string, params: { apiKey: string; network: string }) => {
   return await axios.get(`${config.endpoint}etherTx/send`, {
     headers: {
-      'Authorization': params.apiKey,
+      'x-api-key': params.apiKey,
     },
     params: {
       transaction: serializedTransaction,
@@ -29,7 +29,7 @@ const signTx = (tx: string, params: { privateKey: WithImplicitCoercion<string> |
 const construct = async (params: { apiKey: string; to: string; from: string; value: string; network: string; gasLimit: string }) => {
   return await axios.get(`${config.endpoint}etherTx/construct`, {
     headers: {
-      'Authorization': params.apiKey,
+      'x-api-key': params.apiKey,
     },
     params: {
       to: params.to,
