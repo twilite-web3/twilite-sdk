@@ -18,8 +18,8 @@ const sendSignedTx = async (serializedTransaction: string, params: { apiKey: str
   })
 }
 
-const signTx = (tx: string, params: { privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
-  const common = new Common({ chain: 'ropsten', hardfork: 'london' }) // TODO: make chain dynamic
+const signTx = (tx: string, params: { network: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+  const common = new Common({ chain: params.network, hardfork: 'london' })
   const transaction = FeeMarketEIP1559Transaction.fromTxData(tx, { common })
   const signed = transaction.sign(Buffer.from(params.privateKey, 'hex'))
   const serializedTransaction = '0x' + signed.serialize().toString('hex')
