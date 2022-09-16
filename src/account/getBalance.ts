@@ -21,7 +21,7 @@ module.exports = {
 
     } catch(error) {
 
-      throw error;
+      throw error
 
     }
 
