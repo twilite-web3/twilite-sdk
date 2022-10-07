@@ -4,7 +4,6 @@ const util = require('ethereumjs-util')
 
 module.exports = {
   create: () => {
-
     try {
       const account = keythereum.create()
       const privateKey = account.privateKey
@@ -21,6 +20,5 @@ module.exports = {
     } catch(error) {
       throw error
     }
-
   }
 }
