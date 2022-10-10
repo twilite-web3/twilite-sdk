@@ -26,9 +26,9 @@ const constructContract = async (params: { apiKey: string; address: string; netw
   }
 }
 
-const signContract = async (constructedContract: any, params: { apiKey: string; address: string; network: string; gasLimit: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+const signContract = async (constructedContract: any, params: { apiKey: string; address: string; network: string; hardfork: string; gasLimit: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
   try {
-    const common = new Common({ chain: params.network, hardfork: 'london' })
+    const common = new Common({ chain: params.network, hardfork: params.hardfork })
     const transaction = FeeMarketEIP1559Transaction.fromTxData(constructedContract, { common })
     const signed = transaction.sign(Buffer.from(params.privateKey, 'hex'))
     const serializedTransaction = '0x' + signed.serialize().toString('hex')
@@ -55,7 +55,7 @@ const sendSignedContract = async (signedContract: string, params: { apiKey: stri
 }
 
 module.exports = {
-  deploy: async (params: { apiKey: string; address: string; network: string; gasLimit: string, privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+  deploy: async (params: { apiKey: string; address: string; network: string; hardfork: string; gasLimit: string, privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
     try {
       const compiled = await compile(params)
       const abi = compiled.abi
