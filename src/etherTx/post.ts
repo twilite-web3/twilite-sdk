@@ -22,9 +22,9 @@ const sendSignedTx = async (serializedTransaction: string, params: { apiKey: str
   }
 }
 
-const signTx = (tx: string, params: { network: string; hardfork: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+const signTx = (tx: string, params: { network: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
   try {
-    const common = new Common({ chain: params.network, hardfork: params.hardfork })
+    const common = new Common({ chain: params.network, hardfork: 'merge' })
     const transaction = FeeMarketEIP1559Transaction.fromTxData(tx, { common })
     const signed = transaction.sign(Buffer.from(params.privateKey, 'hex'))
     const serializedTransaction = '0x' + signed.serialize().toString('hex')
@@ -54,7 +54,7 @@ const construct = async (params: { apiKey: string; to: string; from: string; val
 }
 
 module.exports = {
-  post: async (params: { apiKey: string; to: string; from: string; value: string; network: string; hardfork: string; gasLimit: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+  post: async (params: { apiKey: string; to: string; from: string; value: string; network: string; gasLimit: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
     try {
       const constructResponse = await construct(params)
       const signTxResponse = signTx(constructResponse.data, params)
