@@ -28,9 +28,9 @@ const constructMethod = async (params: { apiKey: string; network: string; contra
   }
 }
 
-const sign = (tx: object, params: { network: string; hardfork: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+const sign = (tx: object, params: { network: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
   try {
-    const common = new Common({ chain: params.network, hardfork: params.hardfork })
+    const common = new Common({ chain: params.network, hardfork: 'merge' })
     const transaction = FeeMarketEIP1559Transaction.fromTxData(tx, { common })
     const signed = transaction.sign(Buffer.from(params.privateKey, 'hex'))
     const serializedTransaction = '0x' + signed.serialize().toString('hex')
@@ -57,7 +57,7 @@ const sendSigned = async (signedResult: string, params: { apiKey: string; networ
 }
 
 module.exports = {
-  callMethod: async (params: { apiKey: string; network: string; hardfork: string; contractAddress: string; fromAddress: string; abi: Array<object>; method: string; arguments: Array<string>; gasLimit: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+  callMethod: async (params: { apiKey: string; network: string; contractAddress: string; fromAddress: string; abi: Array<object>; method: string; arguments: Array<string>; gasLimit: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
     try {
       const constructMethodResult = await constructMethod(params)
       const signResult = sign(constructMethodResult, params)
