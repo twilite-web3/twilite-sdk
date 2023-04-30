@@ -6,7 +6,7 @@ const config = require('../../config.json')
 module.exports = {
   getBalances: async (params: { apiKey: string; addresses: Array<string>; network: string }) => {
     try {
-      const response = await axios.get(`${config.endpoint}account/getBalance`, {
+      const response = await axios.get(`${config.host}account/getBalance`, {
         headers: {
           'x-api-key': params.apiKey,
         },

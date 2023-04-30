@@ -6,7 +6,7 @@ const config = require('../../config.json')
 module.exports = {
   estimateMethodCall: async (params: { apiKey: string; network: string; abi: Array<object>; contractAddress: string; arguments: Array<String>; method: string; fromAddress: string }) => {
     try {
-      const response = await axios.get(`${config.endpoint}contract/estimateMethodCall`, {
+      const response = await axios.get(`${config.host}contract/estimateMethodCall`, {
         headers: {
           'x-api-key': params.apiKey,
         },
