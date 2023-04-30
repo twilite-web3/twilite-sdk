@@ -9,7 +9,7 @@ const { compile } = require('../utils/compile')
 const constructContract = async (params: { apiKey: string; address: string; network: string; gasLimit: string }, compiled: { abi: Array<object>; bytecode: string }) => {
   try {
     const abi = JSON.stringify(compiled.abi)
-    return await axios.get(`${config.endpoint}contract/constructContract`, {
+    return await axios.get(`${config.host}contract/constructContract`, {
       headers: {
         'x-api-key': params.apiKey,
       },
@@ -40,7 +40,7 @@ const signContract = async (constructedContract: any, params: { apiKey: string; 
 
 const sendSignedContract = async (signedContract: string, params: { apiKey: string; network: string }) => {
   try {
-    return await axios.get(`${config.endpoint}contract/sendContract`, {
+    return await axios.get(`${config.host}contract/sendContract`, {
       headers: {
         'x-api-key': params.apiKey,
       },

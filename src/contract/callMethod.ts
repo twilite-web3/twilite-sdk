@@ -8,7 +8,7 @@ const { poll } = require('../utils/poll')
 
 const constructMethod = async (params: { apiKey: string; network: string; contractAddress: string; fromAddress: string; abi: Array<object>; method: string; arguments: Array<string>; gasLimit: string }) => {
   try {
-    const response = await axios.get(`${config.endpoint}contract/constructMethod`, {
+    const response = await axios.get(`${config.host}contract/constructMethod`, {
       headers: {
         'x-api-key': params.apiKey,
       },
@@ -42,7 +42,7 @@ const sign = (tx: object, params: { network: string; privateKey: WithImplicitCoe
 
 const sendSigned = async (signedResult: string, params: { apiKey: string; network: string }) => {
   try {
-    return await axios.get(`${config.endpoint}contract/sendMethodCall`, {
+    return await axios.get(`${config.host}contract/sendMethodCall`, {
       headers: {
         'x-api-key': params.apiKey,
       },
