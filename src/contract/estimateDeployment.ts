@@ -1,6 +1,6 @@
 export {}
 const axios = require('axios')
-const config = require('../../config.json')
+const { config } = require('../../config.ts')
 const { compile } = require('../utils/compile')
 
 
@@ -9,7 +9,7 @@ module.exports = {
     try {
       const compiled = await compile(params)
       const bytecode = compiled.bytecode
-      const response = await axios.get(`${config.host}contract/estimateDeployment`, {
+      const response = await axios.get(`${config().host}contract/estimateDeployment`, {
         headers: {
           'x-api-key': params.apiKey,
         },
