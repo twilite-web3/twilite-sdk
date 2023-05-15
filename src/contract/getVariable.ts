@@ -1,12 +1,12 @@
 export {}
 const axios = require('axios')
-const config = require('../../config.json')
+const { config } = require('../../config.ts')
 
 
 module.exports = {
   getVariable: async (params: { apiKey: string; network: string; contractAddress: string; abi: Array<object>; variableName: string }) => {
     try {
-      const response = await axios.get(`${config.host}contract/getVariable`, {
+      const response = await axios.get(`${config().host}contract/getVariable`, {
         headers: {
           'x-api-key': params.apiKey,
         },

@@ -2,13 +2,13 @@ export {}
 const axios = require('axios')
 const { FeeMarketEIP1559Transaction } = require('@ethereumjs/tx')
 const Common = require('@ethereumjs/common').default
-const config = require('../../config.json')
+const { config } = require('../../config.ts')
 const { poll } = require('../utils/poll')
 
 
 const sendSignedTx = async (serializedTransaction: string, params: { apiKey: string; network: string }) => {
   try {
-    return await axios.get(`${config.host}etherTx/send`, {
+    return await axios.get(`${config().host}etherTx/send`, {
       headers: {
         'x-api-key': params.apiKey,
       },
@@ -36,7 +36,7 @@ const signTx = (tx: string, params: { network: string; privateKey: WithImplicitC
 
 const construct = async (params: { apiKey: string; to: string; from: string; value: string; network: string; gasLimit: string }) => {
   try {
-    return await axios.get(`${config.host}etherTx/construct`, {
+    return await axios.get(`${config().host}etherTx/construct`, {
       headers: {
         'x-api-key': params.apiKey,
       },

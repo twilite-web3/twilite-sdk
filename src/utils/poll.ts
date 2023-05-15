@@ -1,11 +1,11 @@
 export {}
 const axios = require('axios')
-const config = require('../../config.json')
+const { config } = require('../../config.ts')
 
 
 const getReceipt = async (txHash: string, params: { apiKey: string; network: string }) => {
   try {
-    return await axios.get(`${config.host}utils/poll`, {
+    return await axios.get(`${config().host}utils/poll`, {
       headers: {
         'x-api-key': params.apiKey,
       },

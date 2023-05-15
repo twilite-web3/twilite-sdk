@@ -1,6 +1,6 @@
 {
   "name": "twilite-sdk",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@alch/alchemy-web3": "^1.2.5",
     "@ethereumjs/common": "^2.6.2",
     "@ethereumjs/tx": "^3.5.0",
     "axios": "^0.25.0",
+    "dotenv": "^16.0.3",
     "ethereumjs-util": "^7.1.4",
     "keythereum": "^1.2.0",
     "solc-js": "^1.0.1"
