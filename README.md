@@ -1,23 +1,61 @@
 # Twilite SDK
-## Providing the easiest way to develop applications that utilize the Ethereum blockchain.
+## The easiest way to develop applications that utilize the Ethereum blockchain.
 
 </br>
+
+## Description
 
 TwiLite SDK is designed to greatly simplify your development process for the Ethereum blockchain. By automating the majority of tasks, it allows you to focus on making straightforward JavaScript-based method calls using the TwiLite SDK. With TwiLite, you can effortlessly send Ether, deploy and interact with smart contracts, and much more, all while enjoying significantly less complexity than other libraries or approaches.
 
 For instance, with TwiLite SDK, you can deploy a smart contract using just a single method call that automatically handles smart contract compilation, gas estimation, and deployment. This simplicity ensures a smoother, more efficient development experience for your Ethereum projects.
 
+If you would like to see and interact with an example implementation of TwiLite SDK, check out the "workbench" section of the twilite website: https://www.twilite.co/workbench.
+
 </br>
 
+## Features
+
+*Contracts*
+- Write, deploy and interact with smart contracts
+
+*Transactions*
+- Send ether to another account
+
+*Utilities*
+- Create accounts, check balances and get costs
+
+</br>
+
+## Requirements and Installation
+
+1. You'll need a twilite account and an API key. If you haven't done so already, head over to https://www.twilite.co and create an account. It's free to get started. Then, log in and go to the account page to get your API key: https://www.twilite.co/account.
+2. Run `npm i twilite-sdk` to install the package.
+
+</br>
+
+## Getting Started
+
+The following are a handful of basic examples to get you started. For more detailed documentation and examples, check out the "API Documentation" section of this README.
+
+To get started, import (or require) the twilite-sdk in your project.
+
+```
+import twilite from 'twilite-sdk'
+
+...
+```
+
+*Create Account*
+
+```
+const account = twilite.account.create()
+```
 
 
 
-2. Features
-   - A list of the main features of the package.
 
-3. Requirements and Installation
-   - Prerequisites for using the package.
-   - How to install the package (e.g., `npm install your-package`).
+</br>
+
 
 4. Getting Started
    - A quick-start guide to help users get up and running.
@@ -28,9 +66,6 @@ For instance, with TwiLite SDK, you can deploy a smart contract using just a sin
    - Description of each function, method, object, or class provided by the package.
    - Parameters, return values, and any exceptions that may be thrown.
    - Examples to show how to use each API element.
-
-6. Configuration and Customization
-   - If the package allows for customization or configuration, explain how users can do so.
 
 7. Examples and Use Cases
    - Real-world examples or case studies demonstrating the use of the package.
