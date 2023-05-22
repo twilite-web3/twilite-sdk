@@ -1,5 +1,5 @@
-# Twilite SDK
-## The easiest way to develop applications that utilize the Ethereum blockchain.
+# Twilite SDK: Ethereum Development Simplified
+The easiest way to develop applications that utilize the Ethereum blockchain.
 
 </br>
 
@@ -39,19 +39,45 @@ The following are a handful of basic examples to get you started. For more detai
 
 To get started, import (or require) the twilite-sdk in your project.
 
-```
-import twilite from 'twilite-sdk'
+```javascript
+import twilite from 'twilite-sdk';
 
 ...
 ```
+</br>
 
-*Create Account*
+### Create Account
 
+The `create` method provided by TwiLite SDK allows you to quickly and easily generate a new account that can be used on the Ethereum blockchain. When you call this method, it returns an object containing a public key, private key, and address for the newly created account.
+
+### Usage Example
+
+To create a new account, simply call the `create` method from the TwiLite SDK as shown below:
+
+```javascript
+const account = twilite.account.create();
 ```
-const account = twilite.account.create()
+
+### Output
+
+The `create` method returns an object with the following properties:
+
+- `privateKey`: A unique private key associated with the account.
+- `publicKey`: The corresponding public key for the account.
+- `address`: The Ethereum address associated with the account.
+
+Here's an example of the returned object:
+
+```json
+{
+   "privateKey": "f8c531ce408f2737f284f18cacbdfadf904115dbcf996b172aee6ec1c0d1c386",
+   "publicKey": "38cd5eeee1132c565d799b4278bb4762d2d8d2290aa36e2d4fb01e664937beb72e3f0c7c706f7fbc22263110343fb96fb586b48819596a650872df02e0e1f959",
+   "address": "0x48f84b5a93e8966e361e874ff9e4fdf945ad8c94"
+}
 ```
 
-
+Now you have a new account ready to use on the Ethereum blockchain!
+Note: This account can be used on both mainnet (with real ether) and test networks such as "Goerli" for prototyping with fake ether.
 
 
 </br>
