@@ -3,6 +3,16 @@ The easiest way to develop applications that utilize the Ethereum blockchain.
 
 </br>
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Understanding Ethereum Networks](#understanding-ethereum-networks)
+4. [Requirements and Installation](#requirements-and-installation)
+5. [Usage](#usage)
+
+</br>
+
 ## Overview
 
 TwiLite SDK is designed to greatly simplify your development process for the Ethereum blockchain. By automating the majority of tasks, it allows you to focus on making straightforward JavaScript-based method calls using the TwiLite SDK. With TwiLite, you can effortlessly send Ether, deploy and interact with smart contracts, and much more, all while enjoying significantly less complexity than other libraries or approaches.
@@ -13,32 +23,27 @@ If you would like to see and interact with an example implementation of TwiLite 
 
 </br>
 
-## Table of Contents
-
-1. [Features](#features)
-3. [Requirements and Installation](#requirements-and-installation)
-4. [Understanding Ethereum Networks](#understanding-ethereum-networks)
-5. [Getting Started](#getting-started)
-
-</br>
-
 ## Features
 
-*Contracts*
-- Write, deploy and interact with smart contracts
+TwiLite SDK is a powerful and user-friendly toolset for Ethereum blockchain development, offering a wide range of features to help you write, deploy, and interact with smart contracts. Below, we highlight some key features of TwiLite SDK:
 
-*Transactions*
-- Send ether to another account
+#### *1. Smart Contract Management*
 
-*Utilities*
-- Create accounts, check balances and get costs
+TwiLite SDK streamlines the process of writing smart contracts in Solidity, allowing you to focus on writing your contract logic while automating common tasks like compilation, deployment, and interaction. With TwiLite SDK, you can quickly test your smart contracts and smoothly transition them to production on the main network.
 
-</br>
+#### *2. Sending Ether*
 
-## Requirements and Installation
+Effortlessly perform Ether transactions on the Ethereum network using TwiLite SDK. This includes sending Ether between accounts or interacting with smart contracts that have payable functions. The SDK's simple API allows you to create transactions with minimal effort, regardless of the network you're working on.
 
-1. You'll need a twilite account and an API key. If you haven't done so already, head over to https://www.twilite.co and create an account. It's free to get started. Then, log in and go to the account page to get your API key: https://www.twilite.co/account.
-2. Run `npm i twilite-sdk` to install the package.
+#### *3. Account Management*
+
+Creating and managing Ethereum accounts is made easy with TwiLite SDK. You can generate new accounts with a single method call. Further, you can conveniently check balances of your accounts.
+
+#### *4. Gas and Transaction Cost Estimation*
+
+Estimating the costs of transactions and smart contract interactions is crucial for efficient operations on the Ethereum network. TwiLite SDK includes built-in functionalities that enable you to estimate costs both in terms of gas and Ether, giving you greater control over your project's costs and ensuring you can optimize your smart contract interactions.
+
+With TwiLite SDK's comprehensive suite of features, you'll experience a smooth and efficient development process while creating powerful and secure Ethereum projects.
 
 </br>
 
@@ -58,7 +63,14 @@ There are several Ethereum testnets available, such as Ropsten, Rinkeby, and Goe
 
 </br>
 
-## Getting Started
+## Requirements and Installation
+
+1. You'll need a twilite account and an API key. If you haven't done so already, head over to https://www.twilite.co and create an account. It's free to get started. Then, log in and go to the account page to get your API key: https://www.twilite.co/account.
+2. Run `npm i twilite-sdk` to install the package.
+
+</br>
+
+## Usage
 
 The following are a handful of basic examples to get you started. For more detailed documentation and examples, check out the "API Documentation" section of this README.
 
