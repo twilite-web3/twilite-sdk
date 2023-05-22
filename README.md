@@ -10,6 +10,7 @@ The easiest way to develop applications that utilize the Ethereum blockchain.
 3. [Understanding Ethereum Networks](#understanding-ethereum-networks)
 4. [Requirements and Installation](#requirements-and-installation)
 5. [Usage](#usage)
+6. [Understanding Costs](#understanding-costs)
 
 </br>
 
@@ -147,6 +148,76 @@ For example, if the balance of the account is 3.50 Ether, the returned string wo
 ```
 
 Use the `getBalance` method to easily keep track of the account balance and manage your funds on the Ethereum network.
+
+</br>
+
+## Get Costs
+
+The `getCosts` method provided by TwiLite SDK allows you to retrieve the current costs associated with transactions on the Ethereum network. Using this method, you can obtain information about base fee, gas price, max priority fee per gas, and max fee per gas.
+
+#### *Usage Example*
+
+To retrieve the current costs for your specified network, call the `getCosts` method from the TwiLite SDK as shown below:
+
+```javascript
+const result = await twilite.utils.getCosts({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  network: '<NETWORK_HERE>', // string. This can either be 'mainnet' or 'goerli'
+});
+```
+
+Make sure to replace `<YOUR_API_KEY_HERE>` and `<NETWORK_HERE>` with the respective values for your use case.
+
+#### *Output*
+
+Here's an example of the returned object:
+
+```json
+{
+  "baseFee": 3156059466,
+  "gasPrice": 3147505989, // wei
+  "maxPriorityFeePerGas": 30652934, // wei
+  "maxFeePerGas": 6342771866 // wei
+}
+```
+If you need help with understanding what these mean, head over to the [Understanding Costs](#understanding-costs) section of this README. 
+
+Utilize the `getCosts` method to stay informed about transaction costs on the Ethereum network and optimize your project's gas consumption.
+
+</br>
+
+
+
+
+
+
+
+
+
+
+
+
+## Understanding Costs
+
+When working with the Ethereum blockchain, it's crucial to understand various cost-related terms to manage your transactions effectively. Let's break down the key terms related to costs in TwiLite SDK:
+
+### Base Fee
+
+Base Fee is the minimum amount of gas units required to include a transaction on the Ethereum blockchain. This value ensures that a transaction is executed within a reasonable timeframe, and it varies depending on the network's congestion level.
+
+### Gas Price
+
+Gas Price (measured in Wei) represents how much each unit of gas costs for a transaction. The total gas cost for a transaction is the product of the gas price and the gas units consumed by the transaction. The gas price depends mainly on network conditions and miner preferences.
+
+### Max Fee Per Gas
+
+Max Fee Per Gas is an estimate of the maximum amount (in Wei) you are willing to pay per unit of gas to get your transaction included in a block. Setting this value helps control the total cost of a transaction. It is particularly useful during times of high network congestion when the gas prices can fluctuate rapidly.
+
+### Max Priority Fee Per Gas
+
+Max Priority Fee Per Gas is the minimum "tip" (in Wei) per unit of gas that incentivizes miners to mine your transaction. By offering a higher priority fee, you can improve the likelihood of your transaction being mined and included faster, especially during times of high network congestion.
+
+Understanding these cost components will enable you to optimize your gas consumption and prioritize your transactions more effectively while working with TwiLite SDK and the Ethereum network.
 
 </br>
 
