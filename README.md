@@ -151,7 +151,7 @@ Use the `getBalance` method to easily keep track of the account balance and mana
 
 </br>
 
-## Get Costs
+### Get Costs
 
 The `getCosts` method provided by TwiLite SDK allows you to retrieve the current costs associated with transactions on the Ethereum network. Using this method, you can obtain information about base fee, gas price, max priority fee per gas, and max fee per gas.
 
@@ -180,9 +180,46 @@ Here's an example of the returned object:
   "maxFeePerGas": 6342771866 // wei
 }
 ```
-If you need help with understanding what these mean, head over to the [Understanding Costs](#understanding-costs) section of this README. 
+If you need help with understanding what this output means, head over to the [Understanding Costs](#understanding-costs) section of this README. 
 
 Utilize the `getCosts` method to stay informed about transaction costs on the Ethereum network and optimize your project's gas consumption.
+
+</br>
+
+### Estimate Ether Transaction
+
+The `estimate` method provided by TwiLite SDK under `twilite.etherTx` allows you to estimate the costs associated with sending Ether to a specific address. This method helps you manage and optimize your Ether transactions on the Ethereum network.
+
+#### *Usage Example*
+
+To estimate the costs of sending Ether to a specified address, call the `estimate` method from the TwiLite SDK as shown below:
+
+```javascript
+const result = await twilite.etherTx.estimate({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  to: '<TO_ADDRESS_HERE>', // string
+  network: '<NETWORK_HERE>', // string. This can either be 'mainnet' or 'goerli'
+});
+```
+
+Make sure to replace `<YOUR_API_KEY_HERE>`, `<TO_ADDRESS_HERE>`, and `<NETWORK_HERE>` with the respective values for your use case.
+
+#### *Output*
+
+Here's an example of the returned object:
+
+```json
+{
+  "estimatedTotalCost": 0.000019319498016, // ether
+  "baseFee": 664327071, 
+  "gasPrice": 919976096, // wei
+  "maxPriorityFeePerGas": 255649025, // wei
+  "maxFeePerGas": 1584303167, // wei
+  "gasLimit": 21000 
+}
+```
+
+If you need help with understanding what this output means, head over to the [Understanding Costs](#understanding-costs) section of this README. 
 
 </br>
 
@@ -195,11 +232,13 @@ Utilize the `getCosts` method to stay informed about transaction costs on the Et
 
 
 
-
-
 ## Understanding Costs
 
-When working with the Ethereum blockchain, it's crucial to understand various cost-related terms to manage your transactions effectively. Let's break down the key terms related to costs in TwiLite SDK:
+When working with the Ethereum blockchain, it's crucial to understand various cost-related terms to manage your transactions effectively. In one of the multiple twilite-sdk estimation calls, some (or all) of the following properties will be returned. Let's break down the key terms related to costs in TwiLite SDK:
+
+### Estimated Total Cost
+
+The estimated total cost is like your "bottom line" of all the other estimated costs. It is the total estimated cost (in ether) of the transaction. This cost is calculated from all of the other properties below. If there is one property within an estimate to take into consideration, it is this one.
 
 ### Base Fee
 
@@ -208,6 +247,10 @@ Base Fee is the minimum amount of gas units required to include a transaction on
 ### Gas Price
 
 Gas Price (measured in Wei) represents how much each unit of gas costs for a transaction. The total gas cost for a transaction is the product of the gas price and the gas units consumed by the transaction. The gas price depends mainly on network conditions and miner preferences.
+
+### Gas Limit
+
+Gas Limit refers to the maximum units of gas that a transaction is authorized to use during its execution on the Ethereum network. This value acts as an upper bound to prevent excessive gas consumption and ensure resource optimization.
 
 ### Max Fee Per Gas
 
