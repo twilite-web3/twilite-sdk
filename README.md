@@ -75,7 +75,7 @@ import twilite from 'twilite-sdk';
 
 The `create` method provided by TwiLite SDK allows you to quickly and easily generate a new account that can be used on the Ethereum blockchain. When you call this method, it returns an object containing a public key, private key, and address for the newly created account.
 
-### Usage Example
+#### *Usage Example*
 
 To create a new account, simply call the `create` method from the TwiLite SDK as shown below:
 
@@ -83,7 +83,7 @@ To create a new account, simply call the `create` method from the TwiLite SDK as
 const account = twilite.account.create();
 ```
 
-### Output
+#### *Output*
 
 The `create` method returns an object with the following properties:
 
@@ -104,6 +104,37 @@ Here's an example of the returned object:
 Now you have a new account ready to use on the Ethereum blockchain!
 Note: This account can be used on both mainnet (with real ether) and test networks such as "Goerli" for prototyping with fake ether.
 
+</br>
+
+### Get Balance
+
+The `getBalance` method provided by TwiLite SDK allows you to retrieve the balance (in Ether) of a specified Ethereum account. To use this method, you need to provide `apiKey`, `address`, and `network` as arguments.
+
+#### *Usage Example*
+
+To retrieve the balance of a specified account, call the `getBalance` method from the TwiLite SDK as shown below:
+
+```javascript
+const result = await twilite.account.getBalance({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  address: '<ACCOUNT_ADDRESS_HERE>', // string
+  network: '<NETWORK_HERE>', // string. This can either be 'mainnet' or 'goerli'
+});
+```
+
+Make sure to replace `<YOUR_API_KEY_HERE>`, `<ACCOUNT_ADDRESS_HERE>`, and `<NETWORK_HERE>` with the respective values for your use case.
+
+#### *Output*
+
+The `getBalance` method returns a string that contains the balance of the specified account in Ether.
+
+For example, if the balance of the account is 3.50 Ether, the returned string would look like:
+
+```
+"3.5"
+```
+
+Use the `getBalance` method to easily keep track of the account balance and manage your funds on the Ethereum network.
 
 </br>
 
