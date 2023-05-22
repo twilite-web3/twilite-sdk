@@ -3,13 +3,22 @@ The easiest way to develop applications that utilize the Ethereum blockchain.
 
 </br>
 
-## Description
+## Overview
 
 TwiLite SDK is designed to greatly simplify your development process for the Ethereum blockchain. By automating the majority of tasks, it allows you to focus on making straightforward JavaScript-based method calls using the TwiLite SDK. With TwiLite, you can effortlessly send Ether, deploy and interact with smart contracts, and much more, all while enjoying significantly less complexity than other libraries or approaches.
 
 For instance, with TwiLite SDK, you can deploy a smart contract using just a single method call that automatically handles smart contract compilation, gas estimation, and deployment. This simplicity ensures a smoother, more efficient development experience for your Ethereum projects.
 
 If you would like to see and interact with an example implementation of TwiLite SDK, check out the "workbench" section of the twilite website: https://www.twilite.co/workbench.
+
+</br>
+
+## Table of Contents
+
+1. [Features](#features)
+3. [Requirements and Installation](#requirements-and-installation)
+4. [Understanding Ethereum Networks](#understanding-ethereum-networks)
+5. [Getting Started](#getting-started)
 
 </br>
 
@@ -30,6 +39,22 @@ If you would like to see and interact with an example implementation of TwiLite 
 
 1. You'll need a twilite account and an API key. If you haven't done so already, head over to https://www.twilite.co and create an account. It's free to get started. Then, log in and go to the account page to get your API key: https://www.twilite.co/account.
 2. Run `npm i twilite-sdk` to install the package.
+
+</br>
+
+## Understanding Ethereum Networks
+
+Before diving into Ethereum development with TwiLite SDK, it is essential to understand the concept of networks. In the context of Ethereum, networks are separate blockchain instances. There are two main types of networks: Mainnet and Testnets.
+
+### Mainnet
+
+Mainnet is the primary Ethereum network, where real Ether is used. Transactions on the Mainnet consume real Ether for gas fees, and any operations performed here have real-world implications. It is generally used for deploying and interacting with production-ready applications and contracts.
+
+### Testnets
+
+Testnets, on the other hand, are separate networks designed for testing purposes. They use fake Ether (also known as test Ether) to facilitate development, testing, and debugging of your programs and applications without incurring real-world costs. Testnets are an excellent environment to ensure your smart contracts work correctly and securely before deploying them on the Mainnet.
+
+There are several Ethereum testnets available, such as Ropsten, Rinkeby, and Goerli. For the best experience with the TwiLite SDK, we recommend using the **Goerli** test network. It offers a reliable and efficient environment to test your Ethereum applications while taking advantage of TwiLite SDK's simplicity and streamlined workflow.
 
 </br>
 
