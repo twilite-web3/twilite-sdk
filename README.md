@@ -292,7 +292,38 @@ Use the `post` method for sending Ether efficiently and securely on the Ethereum
 
 </br>
 
+### Estimate Cost of Contract Deployment
 
+The `estimateDeployment()` method of `twilite-sdk` estimates the cost of deploying a specific contract on the Ethereum blockchain.
+
+#### *Usage*
+```javascript
+const result = await twilite.contract.estimateDeployment({
+	apiKey: '<YOUR_API_KEY_HERE>', // string
+  contract: '<CONTRACT CODE WRITTEN IN SOLIDITY>', // string
+  solidityVersion: '<SOLIDITY VERSION HERE>', // string
+  network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
+});
+```
+
+#### *Example Response*
+
+```json
+{
+    "estimatedTotalCost": 0.000002263848324075, // ether
+    "baseFee": 17,
+    "gasPrice": 4748253, // wei
+    "maxPriorityFeePerGas": 4748236, // wei
+    "maxFeePerGas": 4748270, // wei
+    "gasLimit": 476775
+}
+```
+If you need help with understanding what this output means, head over to the [Understanding Costs](#understanding-costs) section of this README. 
+
+
+
+
+</br>
 
 
 
