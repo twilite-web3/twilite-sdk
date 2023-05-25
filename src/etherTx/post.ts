@@ -22,7 +22,7 @@ const sendSignedTx = async (serializedTransaction: string, params: { apiKey: str
   }
 }
 
-const signTx = (tx: object, params: { network: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+const signTx = (tx: { value: any }, params: { network: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
   try {
     const common = new Common({ chain: params.network, hardfork: 'merge' })
     let transX = tx;
