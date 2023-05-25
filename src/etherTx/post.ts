@@ -22,14 +22,17 @@ const sendSignedTx = async (serializedTransaction: string, params: { apiKey: str
   }
 }
 
-const signTx = (tx: string, params: { network: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
+const signTx = (tx: object, params: { network: string; privateKey: WithImplicitCoercion<string> | { [Symbol.toPrimitive](hint: "string"): string } }) => {
   try {
     const common = new Common({ chain: params.network, hardfork: 'merge' })
-    const transaction = FeeMarketEIP1559Transaction.fromTxData(tx, { common })
+    let transX = tx;
+    transX.value = '0x' + transX.value.toString(16); // convert to hex
+    const transaction = FeeMarketEIP1559Transaction.fromTxData(transX, { common })
     const signed = transaction.sign(Buffer.from(params.privateKey, 'hex'))
     const serializedTransaction = '0x' + signed.serialize().toString('hex')
     return serializedTransaction
   } catch(error) {
+    console.log('[ signTx ] error:', error)
     throw error
   }
 }
