@@ -300,7 +300,7 @@ The `estimateDeployment()` method of `twilite-sdk` estimates the cost of deployi
 ```javascript
 const result = await twilite.contract.estimateDeployment({
 	apiKey: '<YOUR_API_KEY_HERE>', // string
-  contract: '<CONTRACT CODE WRITTEN IN SOLIDITY>', // string
+  contract: '<CONTRACT CODE WRITTEN IN SOLIDITY>', // solidity code wrapped in a string
   solidityVersion: '<SOLIDITY VERSION HERE>', // string
   network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
 });
