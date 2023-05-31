@@ -32,7 +32,6 @@ const signTx = (tx: { value: any }, params: { network: string; privateKey: WithI
     const serializedTransaction = '0x' + signed.serialize().toString('hex')
     return serializedTransaction
   } catch(error) {
-    console.log('[ signTx ] error:', error)
     throw error
   }
 }
