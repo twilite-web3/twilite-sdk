@@ -294,7 +294,15 @@ Use the `post` method for sending Ether efficiently and securely on the Ethereum
 
 The `estimateDeployment()` method of `twilite-sdk` estimates the cost of deploying a specific contract on the Ethereum blockchain.
 
-#### *Usage*
+#### *Properties*
+
+- `apiKey` (string): Your API key for the twilite-sdk. This is required to authenticate your requests to the service.
+- `contract` (string): The contract code written in Solidity and wrapped in a string. This is the code for the smart contract you want to deploy.
+- `solidityVersion` (string): The version of Solidity used to write the contract. This is important for compatibility purposes.
+- `network` (string): The Ethereum network you want to deploy the contract on. This can either be 'mainnet' or 'goerli'.
+
+#### *Example Method Call*
+
 ```javascript
 const result = await twilite.contract.estimateDeployment({
 	apiKey: '<YOUR_API_KEY_HERE>', // string
