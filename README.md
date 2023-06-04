@@ -464,7 +464,7 @@ The response object returned by the `deploy` method contains the following prope
 - `totalCost` (number): The total cost of the deployment transaction in ether.
 - `abi` (array): The Application Binary Interface (ABI) of the deployed contract. The ABI is an array of objects that describe the contract's functions, events, and variables. You can use this later to interact with the contract in order to get variable values or execute method calls.
 
-### Example Response
+#### *Example Response*
 
 ```json
 {
@@ -606,6 +606,34 @@ The response object returned by the `deploy` method contains the following prope
 ```
 
 With the data from this response, you can later interact with the deployed contract using its contract address and ABI.
+
+</br>
+
+### Get Contract Variable
+
+The `getVariable` method is part of the `twilite.contract` object and is used to get the value of a variable included in a smart contract. This method takes an object as an argument with the following properties:
+
+#### *Properties*
+
+- `apiKey` (string): Your API key for the twilite-sdk. This is required to authenticate your requests to the service.
+- `network` (string): The Ethereum network where the contract is deployed. This can either be 'mainnet' or 'goerli'.
+- `contractAddress` (string): The Ethereum address of the deployed contract whose variable value you want to retrieve.
+- `abi` (JSON array): The Application Binary Interface (ABI) of the deployed contract. The ABI is an array of objects that describe the contract's functions, events, and variables.
+- `variableName` (string): The name of the variable whose value you want to retrieve.
+
+#### *Example Method Call*
+
+```javascript
+const result = await twilite.contract.getVariable({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
+  contractAddress: '<CONTRACT ADDRESS HERE>', // string
+  abi: ['CONTRACT ABI HERE'], // JSON array
+  variableName: '<VARIABLE NAME HERE>', // string
+});
+```
+
+This method call returns the value of the specified variable in the smart contract. The value will be returned in the format specified in the contract's ABI (e.g., string, uint256, etc.). You can use this method to read the current state of a variable in a deployed contract without executing a transaction or modifying the contract's state.
 
 </br>
 
