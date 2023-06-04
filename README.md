@@ -637,7 +637,61 @@ This method call returns the value of the specified variable in the smart contra
 
 </br>
 
+### Estimate Contract Method Call
 
+The `estimateMethodCall` method in the twilite-sdk allows you to estimate the cost of calling a specific method in a smart contract. This is useful for understanding the potential gas fees and other costs associated with interacting with a smart contract on the Ethereum blockchain.
+
+#### *Parameters*
+
+- `apiKey` (string): Your API key for the twilite-sdk.
+- `network` (string): The Ethereum network you want to interact with. This can either be 'mainnet' or 'goerli'.
+- `contractAddress` (string): The address of the smart contract you want to call the method on.
+- `fromAddress` (string): The address from which the method call will be made.
+- `method` (string): The name of the method you want to call in the smart contract.
+- `arguments` (Array): An array of arguments required by the method. If the method does not require any arguments, pass an empty array `[]`.
+- `abi` (JSON array): The ABI (Application Binary Interface) of the smart contract.
+
+#### *Example*
+
+```javascript
+const result = await twilite.contract.estimateMethodCall({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
+  contractAddress: '<CONTRACT ADDRESS HERE>', // string
+  fromAddress: '<FROM ADDRESS HERE>', // string
+  method: '<METHOD NAME HERE>', // string
+  arguments: ['ARRAY OF ARGUMENTS HERE'], // Array. If method does NOT require any arguments, put an empty array here ([])
+  abi: ['CONTRACT ABI HERE'], // JSON array
+});
+```
+
+#### *Response Properties*
+
+The method returns an object containing the following properties:
+
+- `estimatedTotalCost` (number): The estimated total cost of the method call in Ether.
+- `baseFee` (number): The base fee for the transaction in Gwei.
+- `gasPrice` (number): The gas price for the transaction in Wei.
+- `maxPriorityFeePerGas` (number): The maximum priority fee per gas in Wei.
+- `maxFeePerGas` (number): The maximum fee per gas in Wei.
+- `gasLimit` (number): The gas limit for the transaction.
+
+#### *Example Response*
+
+```json
+{
+  "estimatedTotalCost": 1.199764409e-9, // ether
+  "baseFee": 24,
+  "gasPrice": 38641, // wei
+  "maxPriorityFeePerGas": 38617, // wei
+  "maxFeePerGas": 38665, // wei
+  "gasLimit": 31049
+}
+```
+
+If you need help with understanding what this output means, head over to the [Understanding Costs](#understanding-costs) section of this README. 
+
+</br>
 
 
 
