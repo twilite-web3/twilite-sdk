@@ -21,6 +21,7 @@ The easiest way to develop applications that utilize the Ethereum blockchain.
     - [Estimate Contract Method Call](#estimate-contract-method-call)
     - [Call Contract Method](#call-contract-method)
 6. [Understanding Costs](#understanding-costs)
+7. [Private Key Security](#private-key-security)
 
 </br>
 
@@ -698,8 +699,6 @@ The method returns an object containing the following properties:
 </br>
 
 
-
-
 ## Understanding Costs
 
 When working with the Ethereum blockchain, it's crucial to understand various cost-related terms to manage your transactions effectively. In one of the multiple twilite-sdk estimation calls, some (or all) of the following properties will be returned. Let's break down the key terms related to costs in TwiLite SDK:
@@ -731,3 +730,8 @@ Max Priority Fee Per Gas is the minimum "tip" (in Wei) per unit of gas that ince
 Understanding these cost components will enable you to optimize your gas consumption and prioritize your transactions more effectively while working with TwiLite SDK and the Ethereum network.
 
 </br>
+
+## Private Key Security
+
+TwiLite takes security very seriously and one important aspect of that is to keep private keys private. The TwiLite SDK NEVER sends private keys over a network and they ALWAYS remain local. We do this by signing transactions from the twilite-sdk package so that they are fully encrypted before being sent to the blockchain.
+
