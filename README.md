@@ -97,8 +97,6 @@ import twilite from 'twilite-sdk';
 
 The `create` method provided by TwiLite SDK allows you to quickly and easily generate a new account that can be used on the Ethereum blockchain. When you call this method, it returns an object containing a public key, private key, and address for the newly created account.
 
-#### *Usage Example*
-
 To create a new account, simply call the `create` method from the TwiLite SDK as shown below:
 
 ```javascript
@@ -132,8 +130,6 @@ Note: This account can be used on both mainnet (with real ether) and test networ
 
 The `getBalance` method provided by TwiLite SDK allows you to retrieve the balance (in Ether) of a specified Ethereum account. To use this method, you need to provide `apiKey`, `address`, and `network` as arguments.
 
-#### *Usage Example*
-
 To retrieve the balance of a specified account, call the `getBalance` method from the TwiLite SDK as shown below:
 
 ```javascript
@@ -163,8 +159,6 @@ Use the `getBalance` method to easily keep track of the account balance and mana
 ### Get Costs
 
 The `getCosts` method provided by TwiLite SDK allows you to retrieve the current costs associated with transactions on the Ethereum network. Using this method, you can obtain information about base fee, gas price, max priority fee per gas, and max fee per gas.
-
-#### *Usage Example*
 
 To retrieve the current costs for your specified network, call the `getCosts` method from the TwiLite SDK as shown below:
 
@@ -198,8 +192,6 @@ Utilize the `getCosts` method to stay informed about transaction costs on the Et
 ### Estimate Ether Transaction
 
 The `estimate` method provided by TwiLite SDK under `twilite.etherTx` allows you to estimate the costs associated with sending Ether to a specific address. This method helps you manage and optimize your Ether transactions on the Ethereum network.
-
-#### *Usage Example*
 
 To estimate the costs of sending Ether to a specified address, call the `estimate` method from the TwiLite SDK as shown below:
 
@@ -236,7 +228,16 @@ If you need help with understanding what this output means, head over to the [Un
 
 The `post` method provided by TwiLite SDK under `twilite.etherTx` allows you to send ether to a specific address on the Ethereum network.
 
-#### *Usage Example*
+#### *Properties*
+
+- `apiKey`: (string) Your API key for the TwiLite SDK. This is required for authentication and authorization purposes.
+- `to`: (string) The Ethereum address that will receive the Ether. This must be a valid Ethereum address.
+- `from`: (string) The Ethereum address that the Ether will be sent from. This must be a valid Ethereum address and have enough Ether to cover the transaction.
+- `value`: (string) The amount of Ether to send, specified in Ether (not Wei). This must be a valid number and not exceed the available balance of the `from` address.
+- `privateKey`: (string) The private key of the `from` address. This is required to sign the transaction and prove ownership of the address. Keep this key secure and never share it with anyone.
+- `network`: (string) The Ethereum network to use for the transaction. This can either be `'mainnet'` for the main Ethereum network or `'goerli'` for the Goerli test network.
+- `gasLimit`: (string, optional) The maximum amount of gas you are willing to spend on the transaction. If not specified, the SDK will estimate the gas limit for you. This is not required for the transaction, but can be useful to set an upper limit on gas fees.
+- `timeout`: (number, optional) The maximum amount of time (in milliseconds) to wait for the transaction to be mined. Defaults to 10 minutes (600000 milliseconds) if not specified. This is not required for the transaction, but can be useful to set a timeout for long-running transactions.
 
 To send ether to a specified address, call the `post` method from the TwiLite SDK as shown below:
 
@@ -351,8 +352,8 @@ The `deploy` method is part of the `twilite.contract` object and is used to depl
 - `privateKey` (string): The private key for the address specified in the `address` property. This is required to sign the deployment transaction.
 - `network` (string): The Ethereum network you want to deploy the contract on. This can either be 'mainnet' or 'goerli'.
 - `solidityVersion` (string): The version of Solidity used to write the contract. This is important for compatibility purposes.
-- `gasLimit` (string, optional): The gas limit for the deployment transaction. This is not required for the deployment.
-- `timeout` (number, optional): The timeout for the deployment in milliseconds. Defaults to 10 minutes (600000 milliseconds) if not specified. This is not required for the deployment.
+- `gasLimit`: (string, optional) The maximum amount of gas you are willing to spend on the deployment. If not specified, the SDK will estimate the gas limit for you. This is not required for the deployment, but can be useful to set an upper limit on gas fees.
+- `timeout`: (number, optional) The maximum amount of time (in milliseconds) to wait for the deployment to complete. Defaults to 10 minutes (600000 milliseconds) if not specified. This is not required for the deployment, but can be useful to set a timeout for long-running deployments.
 
 
 #### *Example Method Call*
@@ -634,8 +635,8 @@ The `callMethod` method in the twilite-sdk allows you to call a specific method 
 - `method` (string): The name of the method you want to call in the smart contract.
 - `arguments` (Array): An array of arguments required by the method. If the method does not require any arguments, pass an empty array `[]`.
 - `privateKey` (string): The private key of the "from address" used to sign the transaction.
-- `gasLimit` (string, optional): The gas limit for the transaction. This is not required for the transaction.
-- `timeout` (number, optional): The timeout for the transaction in milliseconds. Defaults to 10 minutes (600,000 milliseconds) if not specified. This is not required for the transaction.
+- `gasLimit`: (string, optional) The maximum amount of gas you are willing to spend on the contract method call. If not specified, the SDK will estimate the gas limit for you. This is not required for the contract method call, but can be useful to set an upper limit on gas fees.
+- `timeout`: (number, optional) The maximum amount of time (in milliseconds) to wait for the contract method call to complete. Defaults to 10 minutes (600000 milliseconds) if not specified. This is not required for the method call, but can be useful to set a timeout for long-running method calls.
 
 #### *Example*
 
