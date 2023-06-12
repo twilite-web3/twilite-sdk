@@ -82,6 +82,16 @@ There are several Ethereum testnets available. For the best experience with the 
 
 </br>
 
+## Adding Ether to Your Account
+
+To fully utilize TwiLite SDK's functionality, you'll need to add Ether to your account. You can add testing Ether by using a faucet, which allows you to use Ether on a test network. To add Ether to your account, follow these steps:
+
+1. To prevent bots and abuse, the Goerli faucet requires a minimum mainnet balance of 0.001 ETH on the wallet address being used. You can add this small amount of Ether to your account by purchasing it through a reputable exchange such as Coinbase and transferring it to a wallet.
+2. Follow these instructions to add mainnet Ether to your account: https://help.coinbase.com/en/wallet/managing-account/buy-crypto
+3. Once you have a minimum mainnet balance of 0.001 ETH, visit the Goerli test network faucet at https://goerlifaucet.com/ to add testing Ether to your account.
+
+</br>
+
 ## Usage
 
 To get started, import (or require) the twilite-sdk in your project.
