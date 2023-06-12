@@ -9,7 +9,8 @@ The easiest way to develop applications that utilize the Ethereum blockchain.
 2. [Features](#features)
 3. [Understanding Ethereum Networks](#understanding-ethereum-networks)
 4. [Requirements and Installation](#requirements-and-installation)
-5. [Usage](#usage)
+5. [Adding Ether to Your Account](#adding-ether-to-your-account)
+6. [Usage](#usage)
     - [Create Account](#create-account)
     - [Get Balance](#get-balance)
     - [Get Costs](#get-costs)
@@ -20,8 +21,8 @@ The easiest way to develop applications that utilize the Ethereum blockchain.
     - [Get Contract Variable](#get-contract-variable)
     - [Estimate Contract Method Call](#estimate-contract-method-call)
     - [Call Contract Method](#call-contract-method)
-6. [Understanding Costs](#understanding-costs)
-7. [Private Key Security](#private-key-security)
+7. [Understanding Costs](#understanding-costs)
+8. [Private Key Security](#private-key-security)
 
 </br>
 
