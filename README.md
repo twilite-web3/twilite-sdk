@@ -10,7 +10,18 @@ The easiest way to develop applications that utilize the Ethereum blockchain.
 3. [Understanding Ethereum Networks](#understanding-ethereum-networks)
 4. [Requirements and Installation](#requirements-and-installation)
 5. [Usage](#usage)
+    - [Create Account](#create-account)
+    - [Get Balance](#get-balance)
+    - [Get Costs](#get-costs)
+    - [Estimate Ether Transaction](#estimate-ether-transaction)
+    - [Send Ether](#send-ether)
+    - [Estimate Cost of Contract Deployment](#estimate-cost-of-contract-deployment)
+    - [Deploy Contract](#deploy-contract)
+    - [Get Contract Variable](#get-contract-variable)
+    - [Estimate Contract Method Call](#estimate-contract-method-call)
+    - [Call Contract Method](#call-contract-method)
 6. [Understanding Costs](#understanding-costs)
+7. [Private Key Security](#private-key-security)
 
 </br>
 
@@ -71,6 +82,16 @@ There are several Ethereum testnets available. For the best experience with the 
 
 </br>
 
+## Adding Ether to Your Account
+
+To fully utilize TwiLite SDK's functionality, you'll need to add Ether to your account. You can add testing Ether by using a faucet, which allows you to use Ether on a test network. To add Ether to your account, follow these steps:
+
+1. To prevent bots and abuse, the Goerli faucet requires a minimum mainnet balance of 0.001 ETH on the wallet address being used. You can add this small amount of Ether to your account by purchasing it through a reputable exchange such as Coinbase and transferring it to a wallet.
+2. Follow these instructions to add mainnet Ether to your account: https://help.coinbase.com/en/wallet/managing-account/buy-crypto
+3. Once you have a minimum mainnet balance of 0.001 ETH, visit the Goerli test network faucet at https://goerlifaucet.com/ to add testing Ether to your account.
+
+</br>
+
 ## Usage
 
 To get started, import (or require) the twilite-sdk in your project.
@@ -85,8 +106,6 @@ import twilite from 'twilite-sdk';
 ### Create Account
 
 The `create` method provided by TwiLite SDK allows you to quickly and easily generate a new account that can be used on the Ethereum blockchain. When you call this method, it returns an object containing a public key, private key, and address for the newly created account.
-
-#### *Usage Example*
 
 To create a new account, simply call the `create` method from the TwiLite SDK as shown below:
 
@@ -121,8 +140,6 @@ Note: This account can be used on both mainnet (with real ether) and test networ
 
 The `getBalance` method provided by TwiLite SDK allows you to retrieve the balance (in Ether) of a specified Ethereum account. To use this method, you need to provide `apiKey`, `address`, and `network` as arguments.
 
-#### *Usage Example*
-
 To retrieve the balance of a specified account, call the `getBalance` method from the TwiLite SDK as shown below:
 
 ```javascript
@@ -152,8 +169,6 @@ Use the `getBalance` method to easily keep track of the account balance and mana
 ### Get Costs
 
 The `getCosts` method provided by TwiLite SDK allows you to retrieve the current costs associated with transactions on the Ethereum network. Using this method, you can obtain information about base fee, gas price, max priority fee per gas, and max fee per gas.
-
-#### *Usage Example*
 
 To retrieve the current costs for your specified network, call the `getCosts` method from the TwiLite SDK as shown below:
 
@@ -187,8 +202,6 @@ Utilize the `getCosts` method to stay informed about transaction costs on the Et
 ### Estimate Ether Transaction
 
 The `estimate` method provided by TwiLite SDK under `twilite.etherTx` allows you to estimate the costs associated with sending Ether to a specific address. This method helps you manage and optimize your Ether transactions on the Ethereum network.
-
-#### *Usage Example*
 
 To estimate the costs of sending Ether to a specified address, call the `estimate` method from the TwiLite SDK as shown below:
 
@@ -225,7 +238,16 @@ If you need help with understanding what this output means, head over to the [Un
 
 The `post` method provided by TwiLite SDK under `twilite.etherTx` allows you to send ether to a specific address on the Ethereum network.
 
-#### *Usage Example*
+#### *Properties*
+
+- `apiKey`: (string) Your API key for the TwiLite SDK. This is required for authentication and authorization purposes.
+- `to`: (string) The Ethereum address that will receive the Ether. This must be a valid Ethereum address.
+- `from`: (string) The Ethereum address that the Ether will be sent from. This must be a valid Ethereum address and have enough Ether to cover the transaction.
+- `value`: (string) The amount of Ether to send, specified in Ether (not Wei). This must be a valid number and not exceed the available balance of the `from` address.
+- `privateKey`: (string) The private key of the `from` address. This is required to sign the transaction and prove ownership of the address. Keep this key secure and never share it with anyone.
+- `network`: (string) The Ethereum network to use for the transaction. This can either be `'mainnet'` for the main Ethereum network or `'goerli'` for the Goerli test network.
+- `gasLimit`: (string, optional) The maximum amount of gas you are willing to spend on the transaction. If not specified, the SDK will estimate the gas limit for you. This is not required for the transaction, but can be useful to set an upper limit on gas fees.
+- `timeout`: (number, optional) The maximum amount of time (in milliseconds) to wait for the transaction to be mined. Defaults to 10 minutes (600000 milliseconds) if not specified. This is not required for the transaction, but can be useful to set a timeout for long-running transactions.
 
 To send ether to a specified address, call the `post` method from the TwiLite SDK as shown below:
 
@@ -294,7 +316,15 @@ Use the `post` method for sending Ether efficiently and securely on the Ethereum
 
 The `estimateDeployment()` method of `twilite-sdk` estimates the cost of deploying a specific contract on the Ethereum blockchain.
 
-#### *Usage*
+#### *Properties*
+
+- `apiKey` (string): Your API key for the twilite-sdk. This is required to authenticate your requests to the service.
+- `contract` (string): The contract code written in Solidity and wrapped in a string. This is the code for the smart contract you want to deploy.
+- `solidityVersion` (string): The version of Solidity used to write the contract. This is important for compatibility purposes.
+- `network` (string): The Ethereum network you want to deploy the contract on. This can either be 'mainnet' or 'goerli'.
+
+#### *Example Method Call*
+
 ```javascript
 const result = await twilite.contract.estimateDeployment({
 	apiKey: '<YOUR_API_KEY_HERE>', // string
@@ -318,96 +348,366 @@ const result = await twilite.contract.estimateDeployment({
 ```
 If you need help with understanding what this output means, head over to the [Understanding Costs](#understanding-costs) section of this README. 
 
-
 </br>
 
-### Deploy a Contract
+### Deploy Contract
 
-The `contract.deploy()` method of `twilite-sdk` deploys a contract to the Ethereum blockchain.
+The `deploy` method is part of the `twilite.contract` object and is used to deploy a contract to the Ethereum blockchain. This method takes an object as an argument with the following properties:
 
-#### *Usage*
+#### *Properties*
+
+- `apiKey` (string): Your API key for the twilite-sdk. This is required to authenticate your requests to the service.
+- `contract` (string): The contract code written in Solidity and wrapped in a string. This is the code for the smart contract you want to deploy.
+- `address` (string): The Ethereum address from which the contract will be sent. Ether will be deducted from this account in order to pay the costs of deployment.
+- `privateKey` (string): The private key for the address specified in the `address` property. This is required to sign the deployment transaction.
+- `network` (string): The Ethereum network you want to deploy the contract on. This can either be 'mainnet' or 'goerli'.
+- `solidityVersion` (string): The version of Solidity used to write the contract. This is important for compatibility purposes.
+- `gasLimit`: (string, optional) The maximum amount of gas you are willing to spend on the deployment. If not specified, the SDK will estimate the gas limit for you. This is not required for the deployment, but can be useful to set an upper limit on gas fees.
+- `timeout`: (number, optional) The maximum amount of time (in milliseconds) to wait for the deployment to complete. Defaults to 10 minutes (600000 milliseconds) if not specified. This is not required for the deployment, but can be useful to set a timeout for long-running deployments.
+
+
+#### *Example Method Call*
 
 ```javascript
 const result = await twilite.contract.deploy({
-	apiKey: '<YOUR_API_KEY_HERE>', // string
-	contract: '<CONTRACT CODE WRITTEN IN SOLIDITY>', // solidity code wrapped in a string
-	address: '<ACCOUNT_ADDRESS_HERE>', // string, address from which the contract will be sent. Ether will be deducted from this account in order to pay the costs of deployment
-	privateKey: '<PRIVATE_KEY_FOR_ADDRESS_HERE>', // string
-	network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
-	solidityVersion: '<SOLIDITY VERSION HERE>', // string
-	gasLimit: '<OPTIONAL_GAS_LIMIT_HERE>', // string, This is NOT required for the deployment
-	timeout: <OPTIONAL_TIMEOUT_HERE>, // number, milliseconds. Defaults to 10 minutes / 600000 milliseconds if not specified. This is NOT required for the deployment.
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  contract: '<CONTRACT CODE WRITTEN IN SOLIDITY>', // solidity code wrapped in a string
+  address: '<ACCOUNT_ADDRESS_HERE>', // string, address from which the contract will be sent. Ether will be deducted from this account in order to pay the costs of deployment
+  privateKey: '<PRIVATE_KEY_FOR_ADDRESS_HERE>', // string
+  network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
+  solidityVersion: '<SOLIDITY VERSION HERE>', // string
+  gasLimit: '<OPTIONAL_GAS_LIMIT_HERE>', // string, This is NOT required for the deployment
+  timeout: <OPTIONAL_TIMEOUT_HERE>, // number, milliseconds. Defaults to 10 minutes / 600000 milliseconds if not specified. This is NOT required for the deployment.
 });
 ```
 
-#### *Arguments*
+#### *Response Properties*
 
-- `apiKey` (string, required) - Your API key for twilite.
-- `contract` (string, required) - The contract code written in the Solidity language and wrapped in a string.
-- `address` (string, required) - The Ethereum address from which the contract will be sent. Ether will be deducted from this account in order to pay the costs for the deployment. These costs are from the Ethereum blockchain such as gas fees etc. Twilite does NOT recieve anything from these costs.
-- `privateKey` (string, required) - The private key for the above `address`.
-- `network` (string, required) - The network on which the contract will be deployed. This can be either 'mainnet' or 'goerli'.
-- `solidityVersion` (string, required) - The version of Solidity used to write the contract.
-- `gasLimit` (string, optional) - The gas limit for the deployment. This is not required, but if specified, it should be a string containing a number.
-- `timeout` (number, optional) - The timeout for the deployment in milliseconds. This is not required, but if specified, it should be a number. The default value is 10 minutes (600000 milliseconds).
+The response object returned by the `deploy` method contains the following properties:
 
-#### *Returns*
-
-An object containing the following properties:
-
-- `response` (object)
-	- `blockHash` (string) - The hash of the block containing the contract deployment transaction.
-	- `blockNumber` (number) - The block number containing the contract deployment transaction.
-	- `contractAddress` (string) - The address of the deployed contract.
-	- `cumulativeGasUsed` (number) - The cumulative gas used in the block containing the contract deployment transaction.
-	- `effectiveGasPrice` (string) - The effective gas price of the contract deployment transaction.
-	- `from` (string) - The sender address of the contract deployment transaction.
-	- `gasUsed` (number) - The gas used by the contract deployment transaction.
-	- `logs` (array) - An array of log events generated by the contract deployment transaction.
-	- `logsBloom` (string) - A record of log events generated by the contract deployment transaction.
-	- `status` (boolean) - The status of the contract deployment transaction. `true` if successful, `false` if failed.
-	- `to` (null) - The `to` field is `null` for contract deployment transactions.
-	- `transactionHash` (string) - The hash of the contract deployment transaction.
-	- `transactionIndex` (number) - The index of the contract deployment transaction within the block.
-	- `type` (string) - The type of the contract deployment transaction (e.g., '0x2').
-	- `totalCost` (number) - The total cost of the contract deployment, in Ether.
-- `abi` (array) - An array containing the contract's Application Binary Interface (ABI). This information can be used to interact with the contract after it has been deployed.
+- `blockHash` (string): The hash of the block in which the deployment transaction was included.
+- `blockNumber` (number): The number of the block in which the deployment transaction was included.
+- `contractAddress` (string): The Ethereum address of the deployed contract.
+- `cumulativeGasUsed` (number): The total amount of gas used in the block up to and including the deployment transaction.
+- `effectiveGasPrice` (string): The effective gas price of the deployment transaction in wei.
+- `from` (string): The Ethereum address from which the contract was deployed.
+- `gasUsed` (number): The amount of gas used by the deployment transaction.
+- `logs` (array): An array of log objects generated by the deployment transaction.
+- `logsBloom` (string): The logs bloom filter of the deployment transaction.
+- `status` (boolean): The status of the deployment transaction. `true` if the transaction was successful, `false` otherwise.
+- `to` (null): The `to` field is `null` for contract deployment transactions.
+- `transactionHash` (string): The hash of the deployment transaction.
+- `transactionIndex` (number): The index of the deployment transaction within the block.
+- `type` (string): The type of the deployment transaction.
+- `totalCost` (number): The total cost of the deployment transaction in ether.
+- `abi` (array): The Application Binary Interface (ABI) of the deployed contract. The ABI is an array of objects that describe the contract's functions, events, and variables. You can use this later to interact with the contract in order to get variable values or execute method calls.
 
 #### *Example Response*
 
 ```json
 {
-	"response": {
-		"blockHash": "0xdbcd1e9ee2a20be79577cfe9c85131dedd0f97d5330cec501ddf4ef8aa3965b5",
-		"blockNumber": 9064554,
-		"contractAddress": "0xad27203dB0d1374656fa1500e2e22656dc9b0cAB",
-		"cumulativeGasUsed": 9017265,
-		"effectiveGasPrice": "0x4873d8",
-		"from": "0x2bd6fbfda256cebac13931bc3e91f6e0f59a5e23",
-		"gasUsed": 476775,
-		"logs": [],
-		"logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-		"status": true,
-		"to": null,
-		"transactionHash": "0xa6be109eca6c7c228b3b5892d95fa24edadbaec2e1531a3cb493c8238e867c61",
-		"transactionIndex": 66,
-		"type": "0x2",
-		"totalCost": 0.0000022638459401999998
-	},
-	"abi": [
-		{
-		  // ... (contract ABI)
-		}
-	]
+  "response": {
+    "blockHash": "0xdbcd1e9ee2a20be79577cfe9c85131dedd0f97d5330cec501ddf4ef8aa3965b5",
+    "blockNumber": 9064554,
+    "contractAddress": "0xad27203dB0d1374656fa1500e2e22656dc9b0cAB",
+    "cumulativeGasUsed": 9017265,
+    "effectiveGasPrice": "0x4873d8",
+    "from": "0x2bd6fbfda256cebac13931bc3e91f6e0f59a5e23",
+    "gasUsed": 476775,
+    "logs": [],
+    "logsBloom": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "status": true,
+    "to": null,
+    "transactionHash": "0xa6be109eca6c7c228b3b5892d95fa24edadbaec2e1531a3cb493c8238e867c61",
+    "transactionIndex": 66,
+    "type": "0x2",
+    "totalCost": 0.0000022638459401999998
+  },
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "firstDay",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "myString",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "myValue",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "secondDay",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_firstDay",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_secondDay",
+          "type": "string"
+        }
+      ],
+      "name": "setDays",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_myString",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_firstDay",
+          "type": "string"
+        }
+      ],
+      "name": "setString",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_myValue",
+          "type": "uint256"
+        }
+      ],
+      "name": "setValue",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
 }
 ```
 
+With the data from this response, you can later interact with the deployed contract using its contract address and ABI.
 
 </br>
 
+### Get Contract Variable
 
+The `getVariable` method is part of the `twilite.contract` object and is used to get the value of a variable included in a smart contract. This method takes an object as an argument with the following properties:
 
+#### *Properties*
 
+- `apiKey` (string): Your API key for the twilite-sdk. This is required to authenticate your requests to the service.
+- `network` (string): The Ethereum network where the contract is deployed. This can either be 'mainnet' or 'goerli'.
+- `contractAddress` (string): The Ethereum address of the deployed contract whose variable value you want to retrieve.
+- `abi` (JSON array): The Application Binary Interface (ABI) of the deployed contract. The ABI is an array of objects that describe the contract's functions, events, and variables.
+- `variableName` (string): The name of the variable whose value you want to retrieve.
+
+#### *Example Method Call*
+
+```javascript
+const result = await twilite.contract.getVariable({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
+  contractAddress: '<CONTRACT ADDRESS HERE>', // string
+  abi: ['CONTRACT ABI HERE'], // JSON array
+  variableName: '<VARIABLE NAME HERE>', // string
+});
+```
+
+This method call returns the value of the specified variable in the smart contract. The value will be returned in the format specified in the contract's ABI (e.g., string, uint256, etc.). You can use this method to read the current state of a variable in a deployed contract without executing a transaction or modifying the contract's state.
+
+</br>
+
+### Estimate Contract Method Call
+
+The `estimateMethodCall` method in the twilite-sdk allows you to estimate the cost of calling a specific method in a smart contract. This is useful for understanding the potential gas fees and other costs associated with interacting with a smart contract on the Ethereum blockchain.
+
+#### *Properties*
+
+- `apiKey` (string): Your API key for the twilite-sdk.
+- `network` (string): The Ethereum network you want to interact with. This can either be 'mainnet' or 'goerli'.
+- `contractAddress` (string): The address of the smart contract you want to call the method on.
+- `fromAddress` (string): The address from which the method call will be made.
+- `method` (string): The name of the method you want to call in the smart contract.
+- `arguments` (Array): An array of arguments required by the method. If the method does not require any arguments, pass an empty array `[]`.
+- `abi` (JSON array): The ABI (Application Binary Interface) of the smart contract.
+
+#### *Example*
+
+```javascript
+const result = await twilite.contract.estimateMethodCall({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
+  contractAddress: '<CONTRACT ADDRESS HERE>', // string
+  fromAddress: '<FROM ADDRESS HERE>', // string
+  method: '<METHOD NAME HERE>', // string
+  arguments: ['ARRAY OF ARGUMENTS HERE'], // Array. If method does NOT require any arguments, put an empty array here ([])
+  abi: ['CONTRACT ABI HERE'], // JSON array
+});
+```
+
+#### *Response Properties*
+
+The method returns an object containing the following properties:
+
+- `estimatedTotalCost` (number): The estimated total cost of the method call in Ether.
+- `baseFee` (number): The base fee for the transaction in Gwei.
+- `gasPrice` (number): The gas price for the transaction in Wei.
+- `maxPriorityFeePerGas` (number): The maximum priority fee per gas in Wei.
+- `maxFeePerGas` (number): The maximum fee per gas in Wei.
+- `gasLimit` (number): The gas limit for the transaction.
+
+#### *Example Response*
+
+```json
+{
+  "estimatedTotalCost": 1.199764409e-9, // ether
+  "baseFee": 24,
+  "gasPrice": 38641, // wei
+  "maxPriorityFeePerGas": 38617, // wei
+  "maxFeePerGas": 38665, // wei
+  "gasLimit": 31049
+}
+```
+
+If you need help with understanding what this output means, head over to the [Understanding Costs](#understanding-costs) section of this README. 
+
+</br>
+
+### Call Contract Method
+
+The `callMethod` method in the twilite-sdk allows you to call a specific method in a smart contract on the Ethereum blockchain. This is useful for interacting with smart contracts and executing their functions.
+
+#### *Properties*
+
+- `apiKey` (string): Your API key for the twilite-sdk.
+- `network` (string): The Ethereum network you want to interact with. This can either be 'mainnet' or 'goerli'.
+- `contractAddress` (string): The address of the smart contract you want to call the method on.
+- `fromAddress` (string): The address from which the method call will be made.
+- `abi` (JSON array): The ABI (Application Binary Interface) of the smart contract.
+- `method` (string): The name of the method you want to call in the smart contract.
+- `arguments` (Array): An array of arguments required by the method. If the method does not require any arguments, pass an empty array `[]`.
+- `privateKey` (string): The private key of the "from address" used to sign the transaction.
+- `gasLimit`: (string, optional) The maximum amount of gas you are willing to spend on the contract method call. If not specified, the SDK will estimate the gas limit for you. This is not required for the contract method call, but can be useful to set an upper limit on gas fees.
+- `timeout`: (number, optional) The maximum amount of time (in milliseconds) to wait for the contract method call to complete. Defaults to 10 minutes (600000 milliseconds) if not specified. This is not required for the method call, but can be useful to set a timeout for long-running method calls.
+
+#### *Example*
+
+```javascript
+const result = await twilite.contract.callMethod({
+  apiKey: '<YOUR_API_KEY_HERE>', // string
+  network: '<NETWORK_HERE>', // string, This can either be 'mainnet' or 'goerli'
+  contractAddress: '<CONTRACT ADDRESS HERE>', // string
+  fromAddress: '<FROM ADDRESS HERE>', // string
+  abi: ['CONTRACT ABI HERE'], // JSON array
+  method: '<METHOD NAME HERE>', // string
+  arguments: ['ARRAY OF ARGUMENTS HERE'], // Array. If method does NOT require any arguments, put an empty array here ([])
+  privateKey: '<PRIVATE KEY OF "FROM ADDRESS" HERE>', // string
+  gasLimit: '<OPTIONAL GAS LIMIT HERE>', // string, This is NOT required for the transaction
+  timeout: <OPTIONAL TIMEOUT HERE>, // number, milliseconds. Defaults to 10 minutes / 600000 milliseconds if not specified. This is NOT required for the transaction.
+});
+```
+
+#### *Response Properties*
+
+The method returns an object containing the following properties:
+
+- `blockHash` (string): The hash of the block in which the transaction was included.
+- `blockNumber` (number): The block number in which the transaction was included.
+- `contractAddress` (string|null): The address of the contract that was created, if any. If not, this will be `null`.
+- `cumulativeGasUsed` (number): The total amount of gas used in the block up to and including this transaction.
+- `effectiveGasPrice` (string): The effective gas price for the transaction in hexadecimal format.
+- `from` (string): The address from which the method call was made.
+- `gasUsed` (number): The amount of gas used by this specific transaction.
+- `logs` (Array): An array of log objects generated by the transaction.
+- `logsBloom` (string): The logs bloom filter for this transaction in hexadecimal format.
+- `status` (boolean): The status of the transaction. `true` if the transaction was successful, `false` otherwise.
+- `to` (string): The address of the smart contract the method was called on.
+- `transactionHash` (string): The hash of the transaction.
+- `transactionIndex` (number): The index of the transaction in the block.
+- `type` (string): The type of the transaction in hexadecimal format.
+- `totalCost` (number): The total cost of the transaction in Ether.
+
+#### *Example Response*
+
+```json
+{
+  "blockHash": "0x046822f50a6aef94e7059032056fdb2fe302a35bfd8ee43f42fbd952ab6a7514",
+  "blockNumber": 9123872,
+  "contractAddress": null,
+  "cumulativeGasUsed": 15968689,
+  "effectiveGasPrice": "0x96ef",
+  "from": "0x14e2f03bbf3fae2bdc248dc958715bf654a20275",
+  "gasUsed": 31043,
+  "logs": [],
+  "logsBloom": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "status": true,
+  "to": "0x8b6dfbc65c9dc677727d09134286f5a4ec2d570d",
+  "transactionHash": "0x360f1b9ccc5b99e85d25f47302c4f42cfa6f68d82d209a62463f5545579e199f",
+  "transactionIndex": 92,
+  "type": "0x2",
+  "totalCost": 1.1994704769999998e-9
+}
+```
+
+</br>
 
 
 ## Understanding Costs
@@ -442,34 +742,7 @@ Understanding these cost components will enable you to optimize your gas consump
 
 </br>
 
+## Private Key Security
 
-4. Getting Started
-   - A quick-start guide to help users get up and running.
-   - Code snippets or examples to illustrate how to use the package.
+TwiLite takes security very seriously and one important aspect of that is to keep private keys private. The TwiLite SDK NEVER sends private keys over a network and they ALWAYS remain local. We do this by signing transactions from the twilite-sdk package so that they are fully encrypted before being sent to the blockchain.
 
-5. API Documentation
-   - Detailed documentation on the package's API.
-   - Description of each function, method, object, or class provided by the package.
-   - Parameters, return values, and any exceptions that may be thrown.
-   - Examples to show how to use each API element.
-
-7. Examples and Use Cases
-   - Real-world examples or case studies demonstrating the use of the package.
-   - Code samples or tutorials for common use cases.
-
-8. Troubleshooting and FAQ
-   - Common issues or questions that users may encounter, along with their solutions.
-
-9. Contributing
-   - Guidelines for those who wish to contribute to the development of the package (if applicable).
-   - How to submit bug reports, feature requests, or pull requests.
-
-10. Changelog
-    - A list of changes, updates, and improvements made to the package over time, specifying the version number for each update.
-
-11. License
-    - Information about the package's license (e.g., MIT, GPL, etc.).
-
-12. Contact and Support
-    - How users can get in touch with the package's maintainers for help or support.
-    - Links to community resources, such as forums or Slack channels, if available.
